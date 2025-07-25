@@ -87,7 +87,7 @@ def normalize(text):
     return text.strip()
 
 def main():
-    st.title("🔎 FiveStar Company Scraper & Comparator")
+    st.title("🔎 FiveStar Seasonal Web Proofing")
     uploaded_file = st.file_uploader("Upload CSV file with 'Company Web Profile URL' and 'PublishedName':", type="csv")
 
     if uploaded_file:
