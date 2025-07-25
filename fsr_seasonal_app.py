@@ -92,9 +92,9 @@ def main():
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
-        if "Position" not in df.columns:
-            st.warning("Input file is missing 'Position' column. Generating it automatically.")
-            df["Position"] = df.groupby(["Metro", "Category"])["PublishedName"].rank(method="first").astype(int)
+        if "FSR Position" not in df.columns:
+            st.warning("Input file is missing 'FSR Position' column. Generating it automatically.")
+            df["FSR Position"] = df.groupby(["Metro", "Category"])["PublishedName"].rank(method="first").astype(int)
 
         urls = extract_category_urls(df, "Company Web Profile URL")
         st.write(f"📄 Found `{len(urls)}` unique category/metro URLs")
@@ -133,8 +133,8 @@ def main():
             merged.loc[
                 (merged["comparison_issue"] == "") &
                 (merged["position"].notna()) &
-                (merged["Position"].notna()) &
-                (merged["position"] != merged["Position"]),
+                (merged["FSR Position"].notna()) &
+                (merged["position"] != merged["FSR Position"]),
                 "comparison_issue"
             ] = "position mismatch"
 
@@ -153,7 +153,7 @@ def main():
             final_df = pd.concat([merged, missing_rows], ignore_index=True)
 
             # Show result preview
-            st.dataframe(final_df[["PublishedName", "name", "category", "metro", "Position", "position", "comparison_issue"]].fillna(""))
+            st.dataframe(final_df[["PublishedName", "name", "category", "metro", "FSR Position", "position", "comparison_issue"]].fillna(""))
 
             # Download link
             towrite = BytesIO()
